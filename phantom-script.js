@@ -6,6 +6,21 @@ var args = system.args;
 var unusedArg = args[1];
 
 // Send some info node's childProcess' stdout
-system.stdout.write('hello from phantom!')
 
-phantom.exit();
+var url = 'https://www.google.com';
+var page = require('webpage').create();
+
+page.open(url, function(status) {
+  if( status != 'success') {
+    console.log("failed to retrieve page of " + url);
+  } else {
+    var title = page.evaluate(function() {
+      return document.title;
+    });
+    console.log("Title is : " + title);
+  }
+
+  phantom.exit();
+
+});
+
